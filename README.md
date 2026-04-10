@@ -5,3 +5,6 @@ uvicorn main:app --reload
 
 ## การเพิ่ม Seeding ข้อมูล
 python seed.py
+
+## ลิ้งเซิร์ฟเวอร์
+http://localhost:8000
