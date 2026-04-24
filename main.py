@@ -11,7 +11,7 @@ from fastapi.responses import HTMLResponse
 import models
 from database import engine, SessionLocal
 from models import Product, Category
-import easyocr
+# import easyocr
 import re
 from models import Order
 from datetime import timedelta
@@ -176,7 +176,7 @@ def product_search_api(search: str = "", user=Depends(verify_token)):
     finally:
         db.close()
 
-reader = easyocr.Reader(['th', 'en'])
+# reader = easyocr.Reader(['th', 'en'])
 
 @app.get("/pvs/upload", response_class=HTMLResponse)
 def pvs_upload(request: Request):
@@ -211,7 +211,7 @@ def process_ocr(image_path):
         "datetime": date_match,
     }
 
-def parse_thai_datetime(text):
+# def parse_thai_datetime(text):
     thai_months = {
         "ม.ค.": 1, "ก.พ.": 2, "มี.ค.": 3,
         "เม.ย.": 4, "พ.ค.": 5, "มิ.ย.": 6,
