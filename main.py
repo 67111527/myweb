@@ -50,14 +50,17 @@ def home(request: Request, user=Depends(get_current_user)):
     if isinstance(user, RedirectResponse):
         return user
 
-    return templates.TemplateResponse("index.html", {
-        "request": request,
-        "message": "Welcome to My Web App",
-        "username": "Somchai",
-        "email": "somchai@mail.com",
-        "score": 95,
-        "activities": ["Running", "Go", "Football"]
-    })
+    return templates.TemplateResponse(
+        request=request,
+        name="index.html",
+        context={
+            "message": "Welcome to My Web App",
+            "username": "Somchai",
+            "email": "somchai@mail.com",
+            "score": 95,
+            "activities": ["Running", "Go", "Football"]
+        }
+    )
 
 # --- แสดงรายการสินค้า (Read) ---
 @app.get("/products", response_class=HTMLResponse)
@@ -212,34 +215,34 @@ def process_ocr(image_path):
     }
 
 # def parse_thai_datetime(text):
-    thai_months = {
-        "ม.ค.": 1, "ก.พ.": 2, "มี.ค.": 3,
-        "เม.ย.": 4, "พ.ค.": 5, "มิ.ย.": 6,
-        "ก.ค.": 7, "ส.ค.": 8, "ก.ย.": 9,
-        "ต.ค.": 10, "พ.ย.": 11, "ธ.ค.": 12
-    }
+#     thai_months = {
+#         "ม.ค.": 1, "ก.พ.": 2, "มี.ค.": 3,
+#         "เม.ย.": 4, "พ.ค.": 5, "มิ.ย.": 6,
+#         "ก.ค.": 7, "ส.ค.": 8, "ก.ย.": 9,
+#         "ต.ค.": 10, "พ.ย.": 11, "ธ.ค.": 12
+#     }
 
-    match = re.search(
-        r'(\d{1,2})\s+([^\s]+)\s+(\d{2})(?:.*?(\d{1,2}):(\d{2}))?',
-        text
-    )
+#     match = re.search(
+#         r'(\d{1,2})\s+([^\s]+)\s+(\d{2})(?:.*?(\d{1,2}):(\d{2}))?',
+#         text
+#     )
 
-    if not match:
-        return None
+#     if not match:
+#         return None
 
-    day = int(match.group(1))
-    month = thai_months.get(match.group(2), 1)
-    year_ad = int(match.group(3)) + 2500 - 543
+#     day = int(match.group(1))
+#     month = thai_months.get(match.group(2), 1)
+#     year_ad = int(match.group(3)) + 2500 - 543
 
-    time_match = re.search(r'(\d{1,2}):(\d{2})', text)
-    if time_match:
-        hour = int(time_match.group(1))
-        minute = int(time_match.group(2))
-    else:
-        hour = 0
-        minute = 0
+#     time_match = re.search(r'(\d{1,2}):(\d{2})', text)
+#     if time_match:
+#         hour = int(time_match.group(1))
+#         minute = int(time_match.group(2))
+#     else:
+#         hour = 0
+#         minute = 0
 
-    return datetime(year_ad, month, day, hour, minute)
+#     return datetime(year_ad, month, day, hour, minute)
 
 @app.get("/api/pvs/orders")
 def get_orders():
